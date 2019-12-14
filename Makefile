@@ -13,7 +13,7 @@ etags:
 	nix-shell --run "hasktags  -e ./src"
 
 update-cabal:
-	cabal2nix ./ > dependencies.nix
+	nix-shell --run "cabal2nix ./ > dependencies.nix"
 
 enter:
 	nix-shell --cores 0 -j 8 --pure
