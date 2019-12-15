@@ -1,7 +1,10 @@
 OPTIMIZATION=-O0
 
 build: 
-	cabal new-build all -j --ghc-options $(OPTIMIZATION)
+	nix-shell --run "cabal new-build all -j --ghc-options $(OPTIMIZATION)"
+
+install:
+	nix-shell --run "cabal new-install -j --ghc-options $(OPTIMIZATION) --overwrite-policy=always"
 
 ghcid: clean 
 	nix-shell --run "ghcid -s \"import Main\" -c \"cabal new-repl\""
