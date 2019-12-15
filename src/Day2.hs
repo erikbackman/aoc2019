@@ -1,7 +1,7 @@
 module Day2 where
 
 import qualified Data.Vector as V
-import Data.Vector (Vector, (//))
+import Data.Vector (Vector, (//), (!))
 import Control.Monad.State
 import Control.Lens
 import Data.List.Split (splitOn)
@@ -30,7 +30,7 @@ writeTo :: Int -> Int -> Program
 writeTo i v = modify (\s -> s & ix i .~ v) >> readFrom 0
 
 readFrom :: Int -> Program 
-readFrom i = gets (\s -> s V.! i)
+readFrom i = gets (\s -> s ! i)
 
 readPointerFrom :: Int -> Program
 readPointerFrom = readFrom >=> readFrom
