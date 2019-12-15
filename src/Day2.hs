@@ -5,30 +5,26 @@ import Data.Vector (Vector, (//))
 import Control.Monad.State
 import Control.Lens
 import Data.List.Split (splitOn)
-import Control.Monad.Except (ExceptT, runExceptT, throwError)
 
 type Memory = Vector Int
 type Instructions = [Int]
-type Program = ExceptT String (State Memory) Int
+type Program = State Memory Int
 
 solve :: String -> String
 solve = show . part1 . parseInstructions
 
-part1 :: Instructions -> Either String Int
+part1 :: Instructions -> Int
 part1 = runProgram part1Program
 
 parseInstructions :: String -> Instructions
 parseInstructions = fmap read . splitOn "," 
 
-allocateMem :: Instructions -> Memory
-allocateMem = V.fromList
-
 restore :: Memory -> Memory
 restore memory = memory // [(1, 12), (2, 2)]
 
-runProgram :: Program -> Instructions -> Either String Int 
-runProgram program instructions = evalState (runExceptT program) mem
-  where mem = restore $ allocateMem instructions
+runProgram :: Program -> Instructions -> Int 
+runProgram program instructions = evalState program mem
+  where mem = restore $ V.fromList instructions
 
 writeTo :: Int -> Int -> Program 
 writeTo i v = modify (\s -> s & ix i .~ v) >> readFrom 0
@@ -48,7 +44,7 @@ part1Program = runOpCode 0
         1  -> runBinOp (+)
         2  -> runBinOp (*)
         99 -> readFrom 0
-        _  -> throwError $ "unexpected optcode at pos: " <> show pos
+        _  -> error $ "unexpected optcode at pos: " <> show pos
         where
           runBinOp binOp = do
             val1 <- readPointerFrom $ pos+1
