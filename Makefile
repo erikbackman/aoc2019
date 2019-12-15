@@ -3,6 +3,10 @@ OPTIMIZATION=-O0
 build: 
 	nix-shell --run "cabal new-build all -j --ghc-options $(OPTIMIZATION)"
 
+DAY=""
+run:
+	nix-shell --run "cabal new-exec -- aoc2019 $(DAY)"
+
 install:
 	nix-shell --run "cabal new-install -j --ghc-options $(OPTIMIZATION) --overwrite-policy=always"
 
