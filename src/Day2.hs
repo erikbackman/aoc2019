@@ -27,7 +27,7 @@ runProgram program instructions = evalState program mem
   where mem = restore $ V.fromList instructions
 
 writeTo :: Int -> Int -> Program 
-writeTo i v = modify (\s -> s & ix i .~ v) >> readFrom 0
+writeTo i v = modify (\s -> s & ix i .~ v) >> pure 0
 
 readFrom :: Int -> Program 
 readFrom i = gets (\s -> s ! i)
