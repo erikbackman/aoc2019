@@ -44,7 +44,7 @@ part1Program = runOpCode 0
         1  -> runBinOp (+)
         2  -> runBinOp (*)
         99 -> readFrom 0
-        _  -> error $ "unexpected optcode at pos: " <> show pos
+        _  -> error $ "unexpected opcode: " <> show opc <> " at pos: " <> show pos
         where
           runBinOp binOp = do
             val1 <- readPointerFrom $ pos+1
