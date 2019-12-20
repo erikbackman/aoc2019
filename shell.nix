@@ -3,6 +3,7 @@ let
   tools = with pkgs; [
     ghc
     haskellPackages.ghcid
+    haskellPackages.hasktags
     cabal2nix
     cabal-install
   ];
