@@ -6,7 +6,6 @@ module OpCodeProgram where
 import           Data.Vector                    ( Vector
                                                 , (//)
                                                 )
-import qualified Data.Vector                   as V
 import           Control.Monad.State
 import           Control.Lens
 import           Control.Monad.Except
@@ -39,10 +38,10 @@ readFromPtr :: Int -> OpCodeProgram Int
 readFromPtr = readFrom >=> readFrom_
 
 writeTo :: Int -> Int -> OpCodeProgram ()
-writeTo i v = modify (memory . ix i .~ v)
+writeTo i v = memory . ix i .= v
 
 jumpN :: Int -> OpCodeProgram ()
-jumpN n = modify (zeroIx +~ n)
+jumpN n = zeroIx += n
 
 jump :: OpCodeProgram ()
 jump = jumpN 4
@@ -58,9 +57,6 @@ parseOpCode 1  = BinOp (+)
 parseOpCode 2  = BinOp (*)
 parseOpCode 99 = Terminate
 parseOpCode _  = NotSupported
-
-makeMemory :: [Int] -> Vector Int
-makeMemory = V.fromList
 
 restoreMemory :: Vector Int -> Vector Int
 restoreMemory vec = vec // [(1, 12), (2, 2)]

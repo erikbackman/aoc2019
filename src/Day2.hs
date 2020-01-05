@@ -3,6 +3,7 @@ module Day2 where
 import           Data.List.Split                ( splitOn )
 import           OpCodeProgram
 import           Data.Vector                    ( Vector )
+import qualified Data.Vector                   as V
 
 part1 :: OpCodeProgram ()
 part1 = loop $ do
@@ -24,5 +25,4 @@ runPart1 :: Vector Int -> Int
 runPart1 inp = runProgram part1 inp
 
 solve :: String -> String
-solve = show . runPart1 . restoreMemory . makeMemory . parseInstructions
-
+solve = show . runPart1 . restoreMemory . V.fromList . parseInstructions
