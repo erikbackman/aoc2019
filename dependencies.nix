@@ -1,5 +1,5 @@
-{ mkDerivation, base, containers, lens, megaparsec, mtl, split
-, stdenv, transformers, vector
+{ mkDerivation, base, containers, free, lens, megaparsec, mtl
+, split, stdenv, transformers, vector
 }:
 mkDerivation {
   pname = "aoc2019";
@@ -8,10 +8,10 @@ mkDerivation {
   isLibrary = true;
   isExecutable = true;
   libraryHaskellDepends = [
-    base containers lens megaparsec mtl split transformers vector
+    base containers free lens megaparsec mtl split transformers vector
   ];
   executableHaskellDepends = [
-    base containers lens megaparsec mtl split vector
+    base containers free lens megaparsec mtl split transformers vector
   ];
   license = stdenv.lib.licenses.bsd3;
 }
