@@ -4,9 +4,10 @@ import           Data.List.Split                ( splitOn )
 import           OpCodeProgram
 import           Data.Vector                    ( Vector )
 import qualified Data.Vector                   as V
+import           Control.Monad.Except
 
 part1 :: OpCodeProgram ()
-part1 = loop $ do
+part1 = forever $ do
   opc <- readFrom 0
   case parseOpCode opc of
     Terminate   -> end

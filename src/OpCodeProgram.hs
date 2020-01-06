@@ -46,9 +46,6 @@ jumpN n = zeroIx += n
 jump :: OpCodeProgram ()
 jump = jumpN 4
 
-loop :: OpCodeProgram () -> OpCodeProgram ()
-loop = forever
-
 end :: OpCodeProgram ()
 end = throwError ()
 
